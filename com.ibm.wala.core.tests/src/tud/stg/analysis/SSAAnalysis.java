@@ -149,48 +149,51 @@ public class SSAAnalysis {
 
             }
           }
+          
+          DataFlowVisitor dataFlowVisitor = new DataFlowVisitor(ir);
+          ir.visitAllInstructions(dataFlowVisitor);
 
           // analysis / verification part
-          SQLInjectionVisitor sqlCheck = new SQLInjectionVisitor(ir);
-          StreamCloseVisitor streamClosed = new StreamCloseVisitor(ecfg, cdg);
-          ExceptionVisitor exceptionVisitor = new ExceptionVisitor(ir);
-
-          ir.visitAllInstructions(sqlCheck);
-          logger.info("Result for SQL Injection in " + m.getName() + " = " + sqlCheck.result());
-          ir.visitAllInstructions(streamClosed);
-          logger.info("Result for Streams closed incorrect in " + m.getName() + " = " + streamClosed.result());
-
-          ir.visitAllInstructions(exceptionVisitor);
-          logger.info("Result for throwing to general exceptions in " +m.getName() + " = "+exceptionVisitor.result());
-
-          
-          /*
-           * TOP LEVEL should catch own exceptions
-           */
-          String doGet = "doGet(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V";
-          String doPost = "doPost(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V";
-          TypeReference httpServlet = TypeReference
-              .findOrCreate(ClassLoaderReference.Primordial, "Ljavax/servlet/http/HttpServlet");
-          if ((m.getSignature().contains(doPost) || m.getSignature().contains(doGet))
-              && m.getDeclaringClass().getSuperclass().getReference().equals(httpServlet)) {
-            TypeReference[] declaredExceptions = m.getDeclaredExceptions();
-            if (declaredExceptions.length != 0)
-              logger.info("Result for Top-Level Method " + m.getName() + " is not handling an error by itself");
-          }
-          /*
-           * Too  Exceptions thrown
-           */
-          TypeReference[] declaredExceptions = m.getDeclaredExceptions();
-          if (declaredExceptions.length == 1) {
-            TypeReference exception = TypeReference.findOrCreate(ClassLoaderReference.Application, "Ljava/lang/Exception");
-            for (TypeReference typeReference : declaredExceptions) {
-              if (typeReference.equals(exception)) {
-                logger.info("Method " + m.getName() + " is throwing a too general exception");
-              }
-            }
-          }
-
-          logger.info("");
+//          SQLInjectionVisitor sqlCheck = new SQLInjectionVisitor(ir);
+//          StreamCloseVisitor streamClosed = new StreamCloseVisitor(ecfg, cdg);
+//          ExceptionVisitor exceptionVisitor = new ExceptionVisitor(ir);
+//
+//          ir.visitAllInstructions(sqlCheck);
+//          logger.info("Result for SQL Injection in " + m.getName() + " = " + sqlCheck.result());
+//          ir.visitAllInstructions(streamClosed);
+//          logger.info("Result for Streams closed incorrect in " + m.getName() + " = " + streamClosed.result());
+//
+//          ir.visitAllInstructions(exceptionVisitor);
+//          logger.info("Result for throwing to general exceptions in " +m.getName() + " = "+exceptionVisitor.result());
+//
+//          
+//          /*
+//           * TOP LEVEL should catch own exceptions
+//           */
+//          String doGet = "doGet(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V";
+//          String doPost = "doPost(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V";
+//          TypeReference httpServlet = TypeReference
+//              .findOrCreate(ClassLoaderReference.Primordial, "Ljavax/servlet/http/HttpServlet");
+//          if ((m.getSignature().contains(doPost) || m.getSignature().contains(doGet))
+//              && m.getDeclaringClass().getSuperclass().getReference().equals(httpServlet)) {
+//            TypeReference[] declaredExceptions = m.getDeclaredExceptions();
+//            if (declaredExceptions.length != 0)
+//              logger.info("Result for Top-Level Method " + m.getName() + " is not handling an error by itself");
+//          }
+//          /*
+//           * Too  Exceptions thrown
+//           */
+//          TypeReference[] declaredExceptions = m.getDeclaredExceptions();
+//          if (declaredExceptions.length == 1) {
+//            TypeReference exception = TypeReference.findOrCreate(ClassLoaderReference.Application, "Ljava/lang/Exception");
+//            for (TypeReference typeReference : declaredExceptions) {
+//              if (typeReference.equals(exception)) {
+//                logger.info("Method " + m.getName() + " is throwing a too general exception");
+//              }
+//            }
+//          }
+//
+//          logger.info("");
         }
       }
     }

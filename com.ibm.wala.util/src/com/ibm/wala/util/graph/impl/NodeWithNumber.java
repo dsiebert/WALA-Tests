@@ -14,10 +14,13 @@ import com.ibm.wala.util.graph.INodeWithNumber;
 import com.ibm.wala.util.graph.NumberedGraph;
 
 /**
- * A node which carries it's own number; which identifies it in a {@link NumberedGraph} implementation.
+ * A node which carries it's own number; which identifies it in a
+ * {@link NumberedGraph} implementation.
  * 
- * Note that a {@link NodeWithNumber} can live it at most one {@link NumberedGraph} at a time. The {@link NumberedGraph} will mutate
- * the number here. So this is a bit fragile. Use this only if you know what you're doing.
+ * Note that a {@link NodeWithNumber} can live it at most one
+ * {@link NumberedGraph} at a time. The {@link NumberedGraph} will mutate the
+ * number here. So this is a bit fragile. Use this only if you know what you're
+ * doing.
  */
 public class NodeWithNumber implements INodeWithNumber {
 
