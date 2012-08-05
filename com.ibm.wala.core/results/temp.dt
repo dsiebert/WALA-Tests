@@ -1,0 +1,9 @@
+digraph "DirectedGraph" {
+graph [concentrate = true];center=true;fontsize=6;node [ color=blue,shape="box"fontsize=6,fontcolor=black,fontname=Arial];edge [ color=black,fontsize=6,fontcolor=black,fontname=Arial]; 
+   "BB0 (en)\n\n" [ ]
+   "BB1\n0   v4 = getstatic < Application, Ljava/lang/System, out, <Application,Ljava/io/PrintStream> >\l2   invokevirtual < Application, Ljava/io/PrintStream, println(Ljava/lang/String;)V > v4,v2 @4 exception:v5\l" [ ]
+   "BB2\n3   return                         \l" [ ]
+   "BB3 (ex)\n\n" [ ]
+ "BB1\n0   v4 = getstatic < Application, Ljava/lang/System, out, <Application,Ljava/io/PrintStream> >\l2   invokevirtual < Application, Ljava/io/PrintStream, println(Ljava/lang/String;)V > v4,v2 @4 exception:v5\l" -> "BB2\n3   return                         \l" 
+
+}
